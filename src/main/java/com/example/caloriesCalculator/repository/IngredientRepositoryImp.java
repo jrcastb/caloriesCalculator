@@ -2,6 +2,7 @@ package com.example.caloriesCalculator.repository;
 
 
 import com.example.caloriesCalculator.dto.IngredientDTO;
+import com.example.caloriesCalculator.dto.IngredientResponseDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,12 @@ public class IngredientRepositoryImp implements IngredientRepository {
         return result;
     }
 
+    @Override
+    public List<IngredientResponseDTO> findFirst(Integer number) {
+        //TODO: realizar una consulta a la base de datos (archivo estatico) para traer los primeros "#number" ingredientes
+        return null;
+    }
+
     private List<IngredientDTO> loadDatabase() {
         //La carga del archivo
         File file = null;
@@ -41,7 +48,7 @@ public class IngredientRepositoryImp implements IngredientRepository {
         }
         //Se mapea el archivo a una estructura
         ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<IngredientDTO>> typeReference = new TypeReference() {};
+        TypeReference<List<IngredientDTO>> typeReference = new TypeReference<>() {};
         List<IngredientDTO> ingredientDTOS = null;
         try {
             ingredientDTOS = objectMapper.readValue(file, typeReference);

@@ -3,15 +3,17 @@ package com.example.caloriesCalculator.service;
 import com.example.caloriesCalculator.dto.DishDTO;
 import com.example.caloriesCalculator.dto.DishResponseDTO;
 import com.example.caloriesCalculator.dto.IngredientDTO;
+import com.example.caloriesCalculator.dto.IngredientResponseDTO;
 import com.example.caloriesCalculator.repository.IngredientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DishService implements IDishService {
 
-    private IngredientRepository repository;
+    private final IngredientRepository repository;
 
     public DishService(IngredientRepository repository){
         this.repository = repository;
@@ -45,6 +47,14 @@ public class DishService implements IDishService {
 
     @Override
     public List<DishResponseDTO> calculateAllCalories(List<DishDTO> dishes) {
+        List<DishResponseDTO> response = new ArrayList<>();
+        dishes.forEach(dish -> response.add(this.calculateCalories(dish)));
+        return response;
+    }
+
+    @Override
+    public List<IngredientResponseDTO> getFirst(Integer number) {
+        //TODO: conectar con la capa del repository
         return null;
     }
 }

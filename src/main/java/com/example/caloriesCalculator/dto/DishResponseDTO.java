@@ -6,7 +6,7 @@ import lombok.Data;
 public class DishResponseDTO extends DishDTO {
 
     private Integer calories;
-    private IngredientDTO caloric;
+    private IngredientDTO caloric; // nombre - calorias
 
     public DishResponseDTO(DishDTO dish){
         this.setIngredients(dish.getIngredients());
