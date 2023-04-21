@@ -5,6 +5,7 @@ import com.example.caloriesCalculator.dto.DishResponseDTO;
 import com.example.caloriesCalculator.dto.IngredientResponseDTO;
 import com.example.caloriesCalculator.service.IDishService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,21 +30,19 @@ public class CalculateRestController {
     }
 
     @PostMapping("/calculate")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public DishResponseDTO calculate(@RequestBody DishDTO dish){
-        return dishService.calculateCalories(dish);
+    //@ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<DishResponseDTO> calculate(@RequestBody DishDTO dish){
+        return new ResponseEntity<>(dishService.calculateCalories(dish), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/calculateAll")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<DishResponseDTO> calculateAll(@RequestBody List<DishDTO> dishes){
-        return dishService.calculateAllCalories(dishes);
+    public ResponseEntity<List<DishResponseDTO>> calculateAll(@RequestBody List<DishDTO> dishes){
+        return new ResponseEntity<>(dishService.calculateAllCalories(dishes), HttpStatus.ACCEPTED);
     }
 
     @GetMapping(value = "/get_first", params = {"number"})
-    @ResponseStatus(HttpStatus.OK)
-    public List<IngredientResponseDTO> getFirstFiveIngredients(@RequestParam(value = "number") Integer number){
-        //TODO: conectar con la capa del servicio
-        return null;
+    public ResponseEntity<List<IngredientResponseDTO>> getFirstFiveIngredients(@RequestParam(value = "number") Integer number){
+        //Conexión con la capa del servicio
+        return new ResponseEntity<>(dishService.getFirst(number), HttpStatus.OK);
     }
 }

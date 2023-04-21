@@ -54,7 +54,7 @@ public class DishService implements IDishService {
 
     @Override
     public List<IngredientResponseDTO> getFirst(Integer number) {
-        //TODO: conectar con la capa del repository
-        return null;
+        //Conexión con la capa del repository
+        return repository.findFirst(number);
     }
 }

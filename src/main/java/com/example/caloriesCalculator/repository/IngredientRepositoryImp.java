@@ -11,8 +11,10 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class IngredientRepositoryImp implements IngredientRepository {
@@ -34,8 +36,20 @@ public class IngredientRepositoryImp implements IngredientRepository {
 
     @Override
     public List<IngredientResponseDTO> findFirst(Integer number) {
-        //TODO: realizar una consulta a la base de datos (archivo estatico) para traer los primeros "#number" ingredientes
-        return null;
+        //Consulta a la base de datos (archivo estatico) para traer los primeros "#number" ingredientes
+        /*List<IngredientResponseDTO> responseDTOS = new ArrayList<>();
+        for (IngredientDTO element: database) {
+            responseDTOS.add(new IngredientResponseDTO(element.getName(), element.getCalories()));
+        }*/
+        List<IngredientDTO> ingredients = database.stream().limit(number).toList();
+        return ingredients.stream().map(this::mapToResponse).toList();
+    }
+
+    private IngredientResponseDTO mapToResponse(IngredientDTO ingredient) {
+        return IngredientResponseDTO.builder()
+                .name(ingredient.getName())
+                .calories(ingredient.getCalories())
+                .build();
     }
 
     private List<IngredientDTO> loadDatabase() {
